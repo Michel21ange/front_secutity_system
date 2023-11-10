@@ -1,17 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { db } from "../../firebase_config";
+import { collection, getDocs } from "firebase/firestore"; 
 import { Link, } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
-import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload';
-import KeyTwoToneIcon from '@mui/icons-material/KeyTwoTone';
-import LocalPoliceTwoToneIcon from '@mui/icons-material/LocalPoliceTwoTone';
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import BuildIcon from '@mui/icons-material/Build';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import user_ic from '../../Components/Assets/person.png'
+import user_ic from '../../Components/Assets/OIP.jpeg'
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -41,6 +42,24 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
+    const [username, setUsername] = useState([]);
+
+    const getAdmin = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "inscriptionAdmin"));
+        const adminData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))[0];
+        setUsername(adminData.nom);
+      } catch (error) {
+        console.error("Error fetching drivers:", error);
+      }
+    };
+
+    useEffect(() => {
+      getAdmin();
+    }, []);
 
     return (
         <Box
@@ -110,7 +129,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  A21
+                  {username}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Admin
@@ -120,46 +139,40 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            
+          <Item 
+                  title="Gestion des chauffeurs"
+                  to="/register_driver"
+                  icon={<DriveEtaIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+              />
+
               <Item 
-                  title="Gestion des incidents"
-                  to="/incidents"
-                  icon={<AssuredWorkloadIcon />}
+                  title="Tracking vehicule"
+                  to="/tracking"
+                  icon={<ShowChartIcon />}
                   selected={selected}
                   setSelected={setSelected}
                   
               />
 
               <Item 
-                  title="Gestion des accès"
-                  to="/create_access"
-                  icon={<KeyTwoToneIcon />}
+                  title="Detail carburant"
+                  to="/display_detail_carburant"
+                  icon={<LocalGasStationIcon />}
                   selected={selected}
                   setSelected={setSelected}
               />
 
               <Item 
-                  title="Gestion des gardiens"
-                  to="/create_guardian"
-                  icon={<LocalPoliceTwoToneIcon />}
+                  title="Maintenance vehicule"
+                  to="/display_detail_maintenance"
+                  icon={<BuildIcon />}
                   selected={selected}
                   setSelected={setSelected}
               />
 
-              <Item 
-                  title="Gestion des utilisateurs"
-                  to="/list_users"
-                  icon={<PersonOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-              />
-
-              <Item 
-                  title="Rapport et statistique"
-                  to="/dashboard"
-                  icon={<ReceiptTwoToneIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-              />
           </Box>
         </Menu>
     </ProSidebar>

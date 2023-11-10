@@ -1,0 +1,94 @@
+.container_dm{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 5px;
+    width: 600px;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+.header_dm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.date_dm{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text_dm{
+    color: #14121c;
+    font-size: 41px;
+    font-weight: 700;
+    text-align: center;
+}
+
+#text_date{
+    color: #14121c;
+    font-size: 21px;
+    font-weight: 100;
+    text-align: center;
+}
+
+.underline{
+    width: 250px;
+    height: 3px;
+    background: black;
+    border-radius: 9px;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 600px;
+    height: 100px;
+    background: #eaeaea;
+    border-radius: 6px;
+    padding-left: 21px;
+}
+
+.input select{
+    margin-left: 85px;
+    border-left: 1px solid;
+    height: 50px;
+    width: 300px;
+}
+
+#nom input{
+    margin-left: 85px;
+    
+}
+
+.submit_dm{
+display: flex;
+align-items: center;
+margin: auto;
+margin-top: 255px;
+margin-bottom: 42px;
+border-radius: 5px;
+width: 55px;
+height: 50px;
+border-color: rgb(65, 255, 65);
+font-size: 19px;
+font-weight: 600;
+}
+
+
